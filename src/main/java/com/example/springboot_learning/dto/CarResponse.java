@@ -1,6 +1,8 @@
 package com.example.springboot_learning.dto;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-public class carResponse {
+@JsonPropertyOrder({"id", "brand", "model"})
+public class CarResponse {
 
     private Long id;
     private String model;

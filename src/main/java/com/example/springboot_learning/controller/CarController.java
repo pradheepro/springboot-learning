@@ -2,10 +2,12 @@ package com.example.springboot_learning.controller;
 
 import org.springframework.web.bind.annotation.*;
 
-import com.example.springboot_learning.dto.carRequest;
-import com.example.springboot_learning.dto.carResponse;
+import com.example.springboot_learning.dto.CarResponse;
+import com.example.springboot_learning.dto.CarRequest;
 import com.example.springboot_learning.entity.Car;
 import com.example.springboot_learning.service.*;
+
+import jakarta.validation.Valid;
 
 import java.util.*;
 
@@ -18,12 +20,12 @@ public class CarController {
         this.carService = carService;
     }
     @GetMapping("/cars")
-    public List<carResponse> findAllCar(){
+    public List<CarResponse> findAllCar(){
         return carService.getCar();
     }
 
     @GetMapping("/cars/{id}")
-    public Car getCarById(@PathVariable Long id){
+    public CarResponse getCarById(@PathVariable Long id){
         return carService.findCarById(id);
     }
 
@@ -32,19 +34,27 @@ public class CarController {
         return "Car Brand = " + brand;
     }
 
-    @PostMapping("/car/insert")
-    public carResponse saveCar(@RequestBody carRequest carRequest){
+    @PostMapping("/cars/insert")
+    public CarResponse saveCar(@Valid @RequestBody CarRequest carRequest){
         return carService.saveCar(carRequest);
     }
 
-    @PutMapping("/car/update/{id}")
-    public Car updateCarById(@PathVariable Long id, @RequestBody Car car){
-        return carService.updateCarById(id, car);
+    @PutMapping("/cars/update/{id}")
+    public CarResponse updateCarById(@PathVariable Long id, @RequestBody CarRequest carRequest){
+        return carService.updateCarById(id, carRequest);
     }
 
-     @DeleteMapping("/car/delete/{id}")
-    public void updateCarById(@PathVariable Long id){
+     @DeleteMapping("/cars/delete/{id}")
+    public void DeleteCarById(@PathVariable Long id){
         carService.deleteCarById(id);
+    }
+
+    @GetMapping("/cars/transactionalTest")
+    public String TransactionalTest() throws Exception{
+
+        carService.TransactionalTestA();
+
+        return "transaction completed";
     }
 
 }
