@@ -48,4 +48,22 @@ public class CarController {
         carService.deleteCarById(id);
     }
 
+    @GetMapping("/runtimeExceptionTest")
+    public String runtimeExceptionTest() {
+        carService.runtimeExceptionTest();
+        return "Completed";
+    }
+
+    @GetMapping("/checkedExceptionTest")
+    public String checkedExceptionTest() throws Exception {
+        carService.checkedExceptionTest();
+        return "Completed";
+    }
+
+    @GetMapping("/saveAudit")
+    public String saveAudit() {
+        carService.saveAudit("Test audit message");
+        return "Audit saved successfully";
+    }
+
 }
